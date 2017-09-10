@@ -1,0 +1,19 @@
+export ARCH=arm64
+export SUB_ARCH=arm64
+export PATH=/mnt/Building/aarch64-linux-gnu-4.9/bin/:$PATH
+export CROSS_COMPILE=aarch64-linux-gnu-
+
+if [ -e out/arch/arm64/boot ]; then
+	rm -rf out/arch/arm64/boot
+fi
+
+export KBUILD_DIFFCONFIG=dora_diffconfig
+make msm-perf_defconfig O=./out
+make -j16 O=./out
+
+echo "checking for compiled kernel..."
+if [ -f out/arch/arm64/boot/Image.gz-dtb ]
+then
+
+	echo "DONE"
+fi
